@@ -45,7 +45,18 @@ export default function(theme={}) {
       textAlign: 'center',
       fontSize: appStyle.textDayHeaderFontSize,
       fontFamily: appStyle.textDayHeaderFontFamily,
-      color: appStyle.textSectionTitleColor
+      color: appStyle.textSectionTitleColor,
+      fontWeight: '700'
+    },
+    weekHeader: {
+      marginTop: 2,
+      marginBottom: 7,
+      width: 32,
+      textAlign: 'center',
+      fontSize: appStyle.textDayHeaderFontSize,
+      fontFamily: appStyle.textDayHeaderFontFamily,
+      color: appStyle.todayTextColor,
+      fontWeight: '700'
     },
     ...(theme[STYLESHEET_ID] || {})
   });

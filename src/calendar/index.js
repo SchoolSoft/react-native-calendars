@@ -152,9 +152,9 @@ class Calendar extends Component {
     let dayComp;
     if (!dateutils.sameMonth(day, this.state.currentMonth) && this.props.hideExtraDays) {
       if (this.props.markingType === 'period') {
-        dayComp = (<View key={id} style={{flex: 1}}/>);
+        dayComp = (<View key={id} style={{flex: 1}} />);
       } else {
-        dayComp = (<View key={id} style={{width: 32}}/>);
+        dayComp = (<View key={id} style={{width: 32}} />);
       }
     } else {
       const DayComp = this.getDayComponent();
@@ -203,7 +203,7 @@ class Calendar extends Component {
   }
 
   renderWeekNumber (weekNumber) {
-    return <Day key={`week-${weekNumber}`} theme={this.props.theme} state='disabled'>{weekNumber}</Day>;
+    return <Day key={`week-${weekNumber}`} theme={this.props.theme} state='disabled' onPress={() => {return;}}>{weekNumber}</Day>;
   }
 
   renderWeek(days, id) {

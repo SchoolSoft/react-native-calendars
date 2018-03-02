@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  FlatList, Platform
+  FlatList, Platform, Dimensions
 } from 'react-native';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
@@ -12,6 +12,7 @@ import Calendar from '../calendar';
 import CalendarListItem from './item';
 
 const calendarHeight = 360;
+const calendarWidth = Dimensions.get('window').width;
 class CalendarList extends Component {
   static propTypes = {
     ...Calendar.propTypes,
@@ -62,7 +63,7 @@ class CalendarList extends Component {
       initialized: false
     };
     this.lastScrollPosition = -1000;
-    
+
     this.onViewableItemsChangedBound = this.onViewableItemsChanged.bind(this);
     this.renderCalendarBound = this.renderCalendar.bind(this);
   }
@@ -144,17 +145,18 @@ class CalendarList extends Component {
     if (this.props.onVisibleMonthsChange) {
       this.props.onVisibleMonthsChange(visibleMonths);
     }
+
     this.setState({
       rows: newrows
     });
   }
 
   renderCalendar({item}) {
-    return (<CalendarListItem item={item} calendarHeight={calendarHeight} {...this.props} />);
+    return (<CalendarListItem item={item} calendarWidth={calendarWidth} {...this.props} />);
   }
 
   getItemLayout(data, index) {
-    return {length: calendarHeight, offset: calendarHeight * index, index};
+    return {length: calendarWidth, offset: calendarWidth * index, index};
   }
 
   getMonthIndex(month) {
@@ -166,6 +168,8 @@ class CalendarList extends Component {
     return (
       <FlatList
         ref={(c) => this.listView = c}
+        horizontal
+        pagingEnabled
         //scrollEventThrottle={1000}
         style={[this.style.container, this.props.style]}
         initialListSize={this.pastScrollRange * this.futureScrollRange + 1}
@@ -176,7 +180,7 @@ class CalendarList extends Component {
         pageSize={1}
         onViewableItemsChanged={this.onViewableItemsChangedBound}
         renderItem={this.renderCalendarBound}
-        showsVerticalScrollIndicator={this.props.showScrollIndicator !== undefined ? this.props.showScrollIndicator : false}
+        showsHorizontalScrollIndicator={this.props.showScrollIndicator !== undefined ? this.props.showScrollIndicator : false}
         scrollEnabled={this.props.scrollingEnabled !== undefined ? this.props.scrollingEnabled : true}
         keyExtractor={(item, index) => String(index)}
         initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
