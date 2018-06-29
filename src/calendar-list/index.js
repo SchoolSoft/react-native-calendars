@@ -91,7 +91,10 @@ class CalendarList extends Component {
     const scrollAmount = (calendarWidth * this.pastScrollRange) + (diffMonths * calendarWidth);
     //console.log(month, this.state.openDate);
     //console.log(scrollAmount, diffMonths);
-    this.listView.scrollToOffset({offset: scrollAmount, animated: false});
+    this.listView.scrollToOffset({offset: scrollAmount + 1, animated: false});
+    setTimeout(() => {
+      this.listView.scrollToOffset({offset: scrollAmount, animated: false});
+    }, 0)
   }
 
   componentWillReceiveProps(props) {
@@ -164,6 +167,10 @@ class CalendarList extends Component {
     return diffMonths;
   }
 
+  sendListHeight = (height) => {
+    this.props.saveListHeight(height);
+  }
+
   render() {
     return (
       <FlatList
@@ -186,6 +193,10 @@ class CalendarList extends Component {
         initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
         getItemLayout={this.getItemLayout}
         scrollsToTop={this.props.scrollsToTop !== undefined ? this.props.scrollsToTop : false}
+        onLayout={(e) => {
+          const { height } = e.nativeEvent.layout;
+          this.sendListHeight(height);
+        }}
       />
     );
   }
