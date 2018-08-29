@@ -166,11 +166,7 @@ class CalendarList extends Component {
     let diffMonths = this.state.openDate.diffMonths(month) + this.pastScrollRange;
     return diffMonths;
   }
-
-  sendListHeight = (height) => {
-    this.props.saveListHeight(height);
-  }
-
+  
   render() {
     return (
       <FlatList
@@ -193,10 +189,6 @@ class CalendarList extends Component {
         initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
         getItemLayout={this.getItemLayout}
         scrollsToTop={this.props.scrollsToTop !== undefined ? this.props.scrollsToTop : false}
-        onLayout={(e) => {
-          const { height } = e.nativeEvent.layout;
-          this.sendListHeight(height);
-        }}
       />
     );
   }
